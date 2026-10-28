@@ -1,5 +1,7 @@
 import { Category, MenuItem, RestaurantConfig } from '../types';
 
+import arrozPolloImg from '../assets/images/dish_arroz_frito_pollo_1793214567176.jpg';
+import arrozCarneImg from '../assets/images/dish_arroz_frito_carne_1793214679334.jpg';
 import arrozImg from '../assets/images/dish_arroz_frito_special_1793211200095.jpg';
 import yakiImg from '../assets/images/dish_yakisoba_noodles_1793211200477.jpg';
 import polloImg from '../assets/images/dish_pollo_frito_crispy_1793211200475.jpg';
@@ -51,7 +53,7 @@ export const MENU_ITEMS: MenuItem[] = [
     category: 'arroz',
     price: 23000,
     description: 'Arroz al wok con tiernos cubos de pollo, huevo, verdeo y salsa oriental.',
-    image: arrozImg || '/images/arroz_frito.jpg',
+    image: arrozPolloImg || '/images/arroz_frito_pollo.jpg',
   },
   {
     id: 'arroz-2',
@@ -59,7 +61,7 @@ export const MENU_ITEMS: MenuItem[] = [
     category: 'arroz',
     price: 25000,
     description: 'Arroz salteado a fuego vivo con jugosa carne vacuna y especias wok hei.',
-    image: arrozImg || '/images/arroz_frito.jpg',
+    image: arrozCarneImg || '/images/arroz_frito_carne.jpg',
   },
   {
     id: 'arroz-3',
