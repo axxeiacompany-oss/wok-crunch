@@ -1,0 +1,7 @@
+{
+  "name": "Wok Crunch Oriental - Menú Digital",
+  "description": "Menú digital interactivo y pedidos automatizados por WhatsApp para Wok Crunch Oriental.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
