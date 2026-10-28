@@ -1,10 +1,16 @@
 import { Category, MenuItem, RestaurantConfig } from '../types';
 
+import arrozImg from '../assets/images/dish_arroz_frito_special_1793211200095.jpg';
+import yakiImg from '../assets/images/dish_yakisoba_noodles_1793211200477.jpg';
+import polloImg from '../assets/images/dish_pollo_frito_crispy_1793211200475.jpg';
+import papasImg from '../assets/images/dish_papas_fritas_1793212235749.jpg';
+import burgerImg from '../assets/images/dish_hamburguesa_artesanal_1793212235528.jpg';
+
 export const RESTAURANT_DEFAULT_CONFIG: RestaurantConfig = {
   name: 'Wok Crunch Oriental',
   slogan: 'Sabor oriental en cada bocado',
-  whatsappPhone: '', // Dejar vacío para que WhatsApp permita elegir o configurar
-  displayPhone: '+595 981 000 000',
+  whatsappPhone: '595992607393', // 0992 607 393 (Paraguay)
+  displayPhone: '0992 607 393',
   scheduleText: 'Delivery y retiro · Armá tu pedido y envialo por WhatsApp',
   isOpen: true,
   deliveryCost: 0,
@@ -45,7 +51,7 @@ export const MENU_ITEMS: MenuItem[] = [
     category: 'arroz',
     price: 23000,
     description: 'Arroz al wok con tiernos cubos de pollo, huevo, verdeo y salsa oriental.',
-    image: '/src/assets/images/dish_arroz_frito_special_1793211200095.jpg',
+    image: arrozImg || '/images/arroz_frito.jpg',
   },
   {
     id: 'arroz-2',
@@ -53,7 +59,7 @@ export const MENU_ITEMS: MenuItem[] = [
     category: 'arroz',
     price: 25000,
     description: 'Arroz salteado a fuego vivo con jugosa carne vacuna y especias wok hei.',
-    image: '/src/assets/images/dish_arroz_frito_special_1793211200095.jpg',
+    image: arrozImg || '/images/arroz_frito.jpg',
   },
   {
     id: 'arroz-3',
@@ -61,7 +67,7 @@ export const MENU_ITEMS: MenuItem[] = [
     category: 'arroz',
     price: 75000,
     description: 'Camarones seleccionados dorados al wok con arroz especiado y verdeo.',
-    image: '/src/assets/images/dish_arroz_frito_special_1793211200095.jpg',
+    image: arrozImg || '/images/arroz_frito.jpg',
   },
 
   // 🥢 Yakisoba
@@ -71,7 +77,7 @@ export const MENU_ITEMS: MenuItem[] = [
     category: 'yakisoba',
     price: 25000,
     description: 'Fideos ramen salteados con pollo, repollo, zanahoria y salsa agridulce oriental.',
-    image: '/src/assets/images/dish_yakisoba_noodles_1793211200477.jpg',
+    image: yakiImg || '/images/yakisoba.jpg',
   },
   {
     id: 'yaki-2',
@@ -79,7 +85,7 @@ export const MENU_ITEMS: MenuItem[] = [
     category: 'yakisoba',
     price: 28000,
     description: 'Fideos orientales al wok con carne tierna en tiras y verduras frescas crocantes.',
-    image: '/src/assets/images/dish_yakisoba_noodles_1793211200477.jpg',
+    image: yakiImg || '/images/yakisoba.jpg',
   },
   {
     id: 'yaki-3',
@@ -87,7 +93,7 @@ export const MENU_ITEMS: MenuItem[] = [
     category: 'yakisoba',
     price: 75000,
     description: 'Fideos salteados con camarones premium, vegetales y reducción especial.',
-    image: '/src/assets/images/dish_yakisoba_noodles_1793211200477.jpg',
+    image: yakiImg || '/images/yakisoba.jpg',
   },
 
   // 🍗 Pollo frito
@@ -97,7 +103,7 @@ export const MENU_ITEMS: MenuItem[] = [
     category: 'pollo',
     price: 35000,
     description: 'Trozos crujientes de pollo frito estilo oriental, dorados por fuera y jugosos por dentro.',
-    image: '/src/assets/images/dish_pollo_frito_crispy_1793211200475.jpg',
+    image: polloImg || '/images/pollo_frito.jpg',
   },
   {
     id: 'pollo-2',
@@ -105,7 +111,7 @@ export const MENU_ITEMS: MenuItem[] = [
     category: 'pollo',
     price: 40000,
     description: 'Pollo ultra crocante glaseado con salsa agridulce casera y sésamo tostado.',
-    image: '/src/assets/images/dish_pollo_frito_crispy_1793211200475.jpg',
+    image: polloImg || '/images/pollo_frito.jpg',
   },
   {
     id: 'pollo-3',
@@ -113,7 +119,7 @@ export const MENU_ITEMS: MenuItem[] = [
     category: 'pollo',
     price: 40000,
     description: 'Pollo crujiente bañado en deliciosa salsa picante chili wok artesanal.',
-    image: '/src/assets/images/dish_pollo_frito_crispy_1793211200475.jpg',
+    image: polloImg || '/images/pollo_frito.jpg',
   },
 
   // 🍟 Papas fritas
@@ -124,7 +130,7 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 15000,
     portion: 'Porción individual',
     description: 'Papas bastón crujientes sazonadas con sal marina.',
-    image: '/src/assets/images/dish_papas_fritas_1793212235749.jpg',
+    image: papasImg || '/images/papas_fritas.jpg',
   },
   {
     id: 'papas-2',
@@ -133,7 +139,7 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 20000,
     portion: 'Porción para compartir',
     description: 'Abundante porción de papas doradas y crujientes con dip especial.',
-    image: '/src/assets/images/dish_papas_fritas_1793212235749.jpg',
+    image: papasImg || '/images/papas_fritas.jpg',
   },
 
   // 🍔 Hamburguesas
@@ -144,7 +150,7 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 15000,
     portion: 'Simple',
     description: 'Medallón de carne sazonada, queso fundido, lechuga y tomate en pan brioche.',
-    image: '/src/assets/images/dish_hamburguesa_artesanal_1793212235528.jpg',
+    image: burgerImg || '/images/hamburguesa.jpg',
   },
   {
     id: 'burg-2',
@@ -153,6 +159,6 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 25000,
     portion: 'Doble + Panceta',
     description: 'Doble carne jugosa, extra queso derretido, panceta crujiente y salsa especial.',
-    image: '/src/assets/images/dish_hamburguesa_artesanal_1793212235528.jpg',
+    image: burgerImg || '/images/hamburguesa.jpg',
   },
 ];

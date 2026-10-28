@@ -7,16 +7,20 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { MENU_ITEMS, MENU_CATEGORIES, RESTAURANT_DEFAULT_CONFIG } from './data/menu';
 import { MenuItem, RestaurantConfig } from './types';
 import { formatGs, buildWhatsAppLink, playSound } from './utils/format';
-import { X, MapPin, Edit2, Check, ZoomIn } from 'lucide-react';
+import { X, MapPin, Check, ZoomIn } from 'lucide-react';
 
 const STORAGE_KEY_QTY = 'wok_crunch_qty_v2';
-const STORAGE_KEY_CONFIG = 'wok_crunch_config_v2';
+const STORAGE_KEY_CONFIG = 'wok_crunch_config_v3';
 
 export default function App() {
   const [config, setConfig] = useState<RestaurantConfig>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY_CONFIG);
-      return saved ? JSON.parse(saved) : RESTAURANT_DEFAULT_CONFIG;
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.whatsappPhone) return parsed;
+      }
+      return RESTAURANT_DEFAULT_CONFIG;
     } catch {
       return RESTAURANT_DEFAULT_CONFIG;
     }
@@ -41,8 +45,6 @@ export default function App() {
   const [paymentMethod, setPaymentMethod] = useState<'Efectivo' | 'Transferencia'>('Efectivo');
   const [observations, setObservations] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
-  const [isEditingPhone, setIsEditingPhone] = useState(false);
-  const [tempPhone, setTempPhone] = useState(config.whatsappPhone);
 
   // Sync state to localStorage
   useEffect(() => {
@@ -94,16 +96,6 @@ export default function App() {
     setIsSheetOpen(false);
   };
 
-  const handleSavePhone = () => {
-    const clean = tempPhone.replace(/[^0-9]/g, '');
-    setConfig((prev) => ({
-      ...prev,
-      whatsappPhone: clean,
-      displayPhone: clean ? `+${clean}` : prev.displayPhone,
-    }));
-    setIsEditingPhone(false);
-  };
-
   const handleSendOrder = () => {
     if (totalCount === 0) {
       setErrorMsg('Agregá al menos un plato a tu pedido.');
@@ -151,36 +143,6 @@ export default function App() {
               <p className="text-[var(--muted)] text-sm sm:text-base mt-1.5 m-0 font-medium">
                 Sabor oriental en cada bocado
               </p>
-            </div>
-
-            {/* Quick WhatsApp Configuration Pill */}
-            <div className="shrink-0 text-right">
-              {!isEditingPhone ? (
-                <button
-                  onClick={() => setIsEditingPhone(true)}
-                  className="inline-flex items-center gap-1 text-[11px] font-bold text-[var(--muted)] hover:text-[var(--ink)] bg-[var(--surface)] border border-[var(--line)] rounded-full px-2.5 py-1 transition-colors"
-                  title="Configurar número de WhatsApp"
-                >
-                  <span>WhatsApp: {config.whatsappPhone ? `+${config.whatsappPhone}` : 'Configurar'}</span>
-                  <Edit2 className="w-2.5 h-2.5 opacity-60" />
-                </button>
-              ) : (
-                <div className="inline-flex items-center gap-1 bg-[var(--surface)] border border-[var(--line)] rounded-full p-1">
-                  <input
-                    type="text"
-                    value={tempPhone}
-                    onChange={(e) => setTempPhone(e.target.value)}
-                    placeholder="Ej: 595981000000"
-                    className="w-28 text-xs px-2 py-0.5 rounded-full border border-[var(--line)] bg-[var(--bg)]"
-                  />
-                  <button
-                    onClick={handleSavePhone}
-                    className="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs font-bold"
-                  >
-                    ✓
-                  </button>
-                </div>
-              )}
             </div>
           </div>
 
@@ -249,6 +211,14 @@ export default function App() {
                         <img
                           src={item.image}
                           alt={item.name}
+                          referrerPolicy="no-referrer"
+                          onError={(e) => {
+                            // Fallback to static public image if needed
+                            const target = e.currentTarget;
+                            if (!target.src.includes('/images/')) {
+                              target.src = `/images/${item.category === 'arroz' ? 'arroz_frito' : item.category === 'yakisoba' ? 'yakisoba' : item.category === 'pollo' ? 'pollo_frito' : item.category === 'papas' ? 'papas_fritas' : 'hamburguesa'}.jpg`;
+                            }
+                          }}
                           className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-300"
                           loading="lazy"
                         />
@@ -412,6 +382,7 @@ export default function App() {
                     <img
                       src={ci.item.image}
                       alt={ci.item.name}
+                      referrerPolicy="no-referrer"
                       className="w-12 h-12 rounded-xl object-cover shrink-0 border border-[var(--line)] shadow-xs"
                     />
                     <div className="min-w-0 flex-1">
@@ -577,6 +548,7 @@ export default function App() {
               <img
                 src={zoomItem.image}
                 alt={zoomItem.name}
+                referrerPolicy="no-referrer"
                 className="w-full h-full object-cover"
               />
               <button

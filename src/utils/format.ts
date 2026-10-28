@@ -59,9 +59,14 @@ ${itemsText}
  */
 export function buildWhatsAppLink(phoneNumber: string, messageText: string): string {
   // Strip any non-digit character from phone number
-  const cleanPhone = phoneNumber.replace(/[^0-9]/g, '');
+  let cleanPhone = phoneNumber.replace(/[^0-9]/g, '');
+  if (cleanPhone.startsWith('09') && cleanPhone.length === 10) {
+    cleanPhone = '595' + cleanPhone.slice(1);
+  } else if (cleanPhone.startsWith('9') && cleanPhone.length === 9) {
+    cleanPhone = '595' + cleanPhone;
+  }
   const encodedText = encodeURIComponent(messageText);
-  return `https://wa.me/${cleanPhone}?text=${encodedText}`;
+  return cleanPhone ? `https://wa.me/${cleanPhone}?text=${encodedText}` : `https://wa.me/?text=${encodedText}`;
 }
 
 /**
