@@ -10,15 +10,28 @@ import { formatGs, buildWhatsAppLink, playSound } from './utils/format';
 import { X, MapPin, Check, ZoomIn } from 'lucide-react';
 
 const STORAGE_KEY_QTY = 'wok_crunch_qty_v2';
-const STORAGE_KEY_CONFIG = 'wok_crunch_config_v3';
+const STORAGE_KEY_CONFIG = 'wok_crunch_config_v4';
 
 export default function App() {
   const [config, setConfig] = useState<RestaurantConfig>(() => {
     try {
+      // Clear legacy storage if old number was cached
+      const legacy = localStorage.getItem('wok_crunch_config_v3');
+      if (legacy) {
+        try {
+          const old = JSON.parse(legacy);
+          if (old.whatsappPhone === '595992607393') {
+            localStorage.removeItem('wok_crunch_config_v3');
+          }
+        } catch {
+          // ignore
+        }
+      }
+
       const saved = localStorage.getItem(STORAGE_KEY_CONFIG);
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (parsed.whatsappPhone) return parsed;
+        if (parsed.whatsappPhone && parsed.whatsappPhone !== '595992607393') return parsed;
       }
       return RESTAURANT_DEFAULT_CONFIG;
     } catch {
@@ -127,7 +140,14 @@ export default function App() {
 
     // Build URL & Open WhatsApp
     const url = buildWhatsAppLink(config.whatsappPhone, message);
-    window.open(url, '_blank', 'noopener,noreferrer');
+    try {
+      const opened = window.open(url, '_blank', 'noopener,noreferrer');
+      if (!opened) {
+        window.location.href = url;
+      }
+    } catch {
+      window.location.href = url;
+    }
   };
 
   return (

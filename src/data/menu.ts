@@ -11,8 +11,8 @@ import burgerImg from '../assets/images/dish_hamburguesa_artesanal_1793212235528
 export const RESTAURANT_DEFAULT_CONFIG: RestaurantConfig = {
   name: 'Wok Crunch Oriental',
   slogan: 'Sabor oriental en cada bocado',
-  whatsappPhone: '595992607393', // 0992 607 393 (Paraguay)
-  displayPhone: '0992 607 393',
+  whatsappPhone: '595991607393', // 0991 607 393 (Paraguay)
+  displayPhone: '0991 607 393',
   scheduleText: 'Delivery y retiro · Armá tu pedido y envialo por WhatsApp',
   isOpen: true,
   deliveryCost: 0,
