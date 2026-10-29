@@ -57,16 +57,18 @@ ${itemsText}
 /**
  * Creates clean wa.me link with URL encoded message
  */
-export function buildWhatsAppLink(phoneNumber: string, messageText: string): string {
+export function buildWhatsAppLink(phoneNumber?: string, messageText: string = ''): string {
   // Strip any non-digit character from phone number
-  let cleanPhone = phoneNumber.replace(/[^0-9]/g, '');
-  if (cleanPhone.startsWith('09') && cleanPhone.length === 10) {
+  let cleanPhone = (phoneNumber || '595991607393').replace(/[^0-9]/g, '');
+  if (!cleanPhone || cleanPhone === '595992607393') {
+    cleanPhone = '595991607393';
+  } else if (cleanPhone.startsWith('09') && cleanPhone.length === 10) {
     cleanPhone = '595' + cleanPhone.slice(1);
   } else if (cleanPhone.startsWith('9') && cleanPhone.length === 9) {
     cleanPhone = '595' + cleanPhone;
   }
   const encodedText = encodeURIComponent(messageText);
-  return cleanPhone ? `https://wa.me/${cleanPhone}?text=${encodedText}` : `https://wa.me/?text=${encodedText}`;
+  return `https://wa.me/${cleanPhone}?text=${encodedText}`;
 }
 
 /**

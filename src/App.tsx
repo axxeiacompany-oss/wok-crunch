@@ -109,15 +109,11 @@ export default function App() {
     setIsSheetOpen(false);
   };
 
-  const handleSendOrder = () => {
+  // Dynamic WhatsApp order link computed with the order text
+  const whatsAppOrderUrl = useMemo(() => {
     if (totalCount === 0) {
-      setErrorMsg('Agregá al menos un plato a tu pedido.');
-      return;
+      return buildWhatsAppLink(config.whatsappPhone, '');
     }
-
-    setErrorMsg('');
-
-    // Assemble message
     let message = `🥢 *NUEVO PEDIDO · WOK CRUNCH ORIENTAL*\n\n1️⃣ *Productos:*\n`;
     cartItems.forEach((ci) => {
       message += `• ${ci.quantity} × ${ci.item.name} — ${formatGs(ci.subtotal)}\n`;
@@ -135,11 +131,20 @@ export default function App() {
     if (observations.trim()) {
       message += `📝 *Obs.:* ${observations.trim()}\n`;
     }
+    return buildWhatsAppLink(config.whatsappPhone, message);
+  }, [cartItems, totalPrice, totalCount, customerName, deliveryType, address, paymentMethod, observations, config.whatsappPhone]);
 
+  const handleSendOrder = () => {
+    if (totalCount === 0) {
+      setErrorMsg('Agregá al menos un plato a tu pedido.');
+      return;
+    }
+
+    setErrorMsg('');
     playSound('success');
 
     // Build URL & Open WhatsApp
-    const url = buildWhatsAppLink(config.whatsappPhone, message);
+    const url = whatsAppOrderUrl;
     try {
       const opened = window.open(url, '_blank', 'noopener,noreferrer');
       if (!opened) {
@@ -166,8 +171,18 @@ export default function App() {
             </div>
           </div>
 
-          <div className="mt-3.5 inline-block bg-[var(--sesame)] text-[#2A1E05] rounded-full px-3.5 py-1.5 font-bold text-xs sm:text-sm">
-            🛵 Delivery y retiro · Armá tu pedido y envialo por WhatsApp
+          <div className="mt-3.5 flex flex-wrap items-center gap-2">
+            <div className="inline-block bg-[var(--sesame)] text-[#2A1E05] rounded-full px-3.5 py-1.5 font-bold text-xs sm:text-sm">
+              🛵 Delivery y retiro
+            </div>
+            <a
+              href={`https://wa.me/${config.whatsappPhone}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 bg-[#1FA855] hover:bg-[#1b934a] text-white rounded-full px-3.5 py-1.5 font-bold text-xs sm:text-sm shadow-xs transition-colors"
+            >
+              <span>📲 WhatsApp Pedidos: {config.displayPhone}</span>
+            </a>
           </div>
         </div>
       </header>
@@ -236,7 +251,29 @@ export default function App() {
                             // Fallback to static public image if needed
                             const target = e.currentTarget;
                             if (!target.src.includes('/images/')) {
-                              target.src = `/images/${item.category === 'arroz' ? 'arroz_frito' : item.category === 'yakisoba' ? 'yakisoba' : item.category === 'pollo' ? 'pollo_frito' : item.category === 'papas' ? 'papas_fritas' : 'hamburguesa'}.jpg`;
+                              if (item.id === 'arroz-3') {
+                                target.src = '/images/arroz_frito_camaron.jpg';
+                              } else if (item.id === 'yaki-1') {
+                                target.src = '/images/yakisoba_pollo.jpg';
+                              } else if (item.id === 'yaki-3') {
+                                target.src = '/images/yakisoba_camaron.jpg';
+                              } else if (item.id === 'pollo-1') {
+                                target.src = '/images/pollo_frito_normal.jpg';
+                              } else if (item.id === 'pollo-2') {
+                                target.src = '/images/pollo_frito_agridulce.jpg';
+                              } else if (item.id === 'pollo-3') {
+                                target.src = '/images/pollo_frito_picante.jpg';
+                              } else if (item.id === 'papas-1') {
+                                target.src = '/images/papas_pequena.jpg';
+                              } else if (item.id === 'papas-2') {
+                                target.src = '/images/papas_grande.jpg';
+                              } else if (item.id === 'burg-1') {
+                                target.src = '/images/burger_pequena.jpg';
+                              } else if (item.id === 'burg-2') {
+                                target.src = '/images/burger_grande.jpg';
+                              } else {
+                                target.src = `/images/${item.category === 'arroz' ? 'arroz_frito' : item.category === 'yakisoba' ? 'yakisoba' : item.category === 'pollo' ? 'pollo_frito' : item.category === 'papas' ? 'papas_fritas' : 'hamburguesa'}.jpg`;
+                              }
                             }
                           }}
                           className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-300"
@@ -544,12 +581,28 @@ export default function App() {
             )}
 
             {/* Big Green WhatsApp Send Button */}
-            <button
-              onClick={handleSendOrder}
-              className="w-full py-4 rounded-2xl bg-[#1FA855] hover:bg-[#1b934a] text-white font-extrabold text-base shadow-lg shadow-green-900/20 active:scale-[0.99] transition-all flex items-center justify-center gap-2"
+            <a
+              href={totalCount > 0 ? whatsAppOrderUrl : '#'}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => {
+                if (totalCount === 0) {
+                  e.preventDefault();
+                  setErrorMsg('Agregá al menos un plato a tu pedido.');
+                  return;
+                }
+                setErrorMsg('');
+                playSound('success');
+              }}
+              className="w-full py-3.5 px-4 rounded-2xl bg-[#1FA855] hover:bg-[#1b934a] text-white font-extrabold shadow-lg shadow-green-900/20 active:scale-[0.99] transition-all flex flex-col items-center justify-center text-center cursor-pointer no-underline"
             >
-              <span>Enviar pedido por WhatsApp 📲</span>
-            </button>
+              <span className="text-base flex items-center justify-center gap-2">
+                Enviar pedido por WhatsApp 📲
+              </span>
+              <span className="text-xs font-medium text-emerald-100 mt-0.5">
+                Destino: <strong>0991 607 393</strong> (+595 991 607 393)
+              </span>
+            </a>
           </div>
         </div>
       )}

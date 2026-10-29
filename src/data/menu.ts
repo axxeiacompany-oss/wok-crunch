@@ -2,11 +2,19 @@ import { Category, MenuItem, RestaurantConfig } from '../types';
 
 import arrozPolloImg from '../assets/images/dish_arroz_frito_pollo_1793214567176.jpg';
 import arrozCarneImg from '../assets/images/dish_arroz_frito_carne_1793214679334.jpg';
+import arrozCamaronImg from '../assets/images/dish_arroz_frito_camaron_1793299402441.jpg';
 import arrozImg from '../assets/images/dish_arroz_frito_special_1793211200095.jpg';
+import yakiPolloImg from '../assets/images/dish_yakisoba_pollo_1793299563720.jpg';
+import yakiCamaronImg from '../assets/images/dish_yakisoba_camaron_1793299663676.jpg';
 import yakiImg from '../assets/images/dish_yakisoba_noodles_1793211200477.jpg';
+import polloNormalImg from '../assets/images/dish_pollo_frito_normal_1793299840353.jpg';
+import polloAgridulceImg from '../assets/images/dish_pollo_agridulce_1793300327203.jpg';
+import polloPicanteImg from '../assets/images/dish_pollo_picante_1793300426009.jpg';
 import polloImg from '../assets/images/dish_pollo_frito_crispy_1793211200475.jpg';
-import papasImg from '../assets/images/dish_papas_fritas_1793212235749.jpg';
-import burgerImg from '../assets/images/dish_hamburguesa_artesanal_1793212235528.jpg';
+import papasPequenaImg from '../assets/images/dish_papas_pequena_1793300548287.jpg';
+import papasGrandeImg from '../assets/images/dish_papas_grande_1793300730017.jpg';
+import burgerPequenaImg from '../assets/images/dish_burger_pequena_1793300858602.jpg';
+import burgerGrandeImg from '../assets/images/dish_burger_grande_1793300963811.jpg';
 
 export const RESTAURANT_DEFAULT_CONFIG: RestaurantConfig = {
   name: 'Wok Crunch Oriental',
@@ -69,7 +77,7 @@ export const MENU_ITEMS: MenuItem[] = [
     category: 'arroz',
     price: 75000,
     description: 'Camarones seleccionados dorados al wok con arroz especiado y verdeo.',
-    image: arrozImg || '/images/arroz_frito.jpg',
+    image: arrozCamaronImg || '/images/dish_arroz_frito_camaron_1793299402441.jpg',
   },
 
   // 🥢 Yakisoba
@@ -79,7 +87,7 @@ export const MENU_ITEMS: MenuItem[] = [
     category: 'yakisoba',
     price: 25000,
     description: 'Fideos ramen salteados con pollo, repollo, zanahoria y salsa agridulce oriental.',
-    image: yakiImg || '/images/yakisoba.jpg',
+    image: yakiPolloImg || '/images/dish_yakisoba_pollo_1793299563720.jpg',
   },
   {
     id: 'yaki-2',
@@ -95,7 +103,7 @@ export const MENU_ITEMS: MenuItem[] = [
     category: 'yakisoba',
     price: 75000,
     description: 'Fideos salteados con camarones premium, vegetales y reducción especial.',
-    image: yakiImg || '/images/yakisoba.jpg',
+    image: yakiCamaronImg || '/images/dish_yakisoba_camaron_1793299663676.jpg',
   },
 
   // 🍗 Pollo frito
@@ -105,7 +113,7 @@ export const MENU_ITEMS: MenuItem[] = [
     category: 'pollo',
     price: 35000,
     description: 'Trozos crujientes de pollo frito estilo oriental, dorados por fuera y jugosos por dentro.',
-    image: polloImg || '/images/pollo_frito.jpg',
+    image: polloNormalImg || '/images/dish_pollo_frito_normal_1793299840353.jpg',
   },
   {
     id: 'pollo-2',
@@ -113,7 +121,7 @@ export const MENU_ITEMS: MenuItem[] = [
     category: 'pollo',
     price: 40000,
     description: 'Pollo ultra crocante glaseado con salsa agridulce casera y sésamo tostado.',
-    image: polloImg || '/images/pollo_frito.jpg',
+    image: polloAgridulceImg || '/images/dish_pollo_agridulce_1793300327203.jpg',
   },
   {
     id: 'pollo-3',
@@ -121,7 +129,7 @@ export const MENU_ITEMS: MenuItem[] = [
     category: 'pollo',
     price: 40000,
     description: 'Pollo crujiente bañado en deliciosa salsa picante chili wok artesanal.',
-    image: polloImg || '/images/pollo_frito.jpg',
+    image: polloPicanteImg || '/images/dish_pollo_picante_1793300426009.jpg',
   },
 
   // 🍟 Papas fritas
@@ -132,7 +140,7 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 15000,
     portion: 'Porción individual',
     description: 'Papas bastón crujientes sazonadas con sal marina.',
-    image: papasImg || '/images/papas_fritas.jpg',
+    image: papasPequenaImg || '/images/dish_papas_pequena_1793300548287.jpg',
   },
   {
     id: 'papas-2',
@@ -141,7 +149,7 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 20000,
     portion: 'Porción para compartir',
     description: 'Abundante porción de papas doradas y crujientes con dip especial.',
-    image: papasImg || '/images/papas_fritas.jpg',
+    image: papasGrandeImg || '/images/dish_papas_grande_1793300730017.jpg',
   },
 
   // 🍔 Hamburguesas
@@ -152,7 +160,7 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 15000,
     portion: 'Simple',
     description: 'Medallón de carne sazonada, queso fundido, lechuga y tomate en pan brioche.',
-    image: burgerImg || '/images/hamburguesa.jpg',
+    image: burgerPequenaImg || '/images/dish_burger_pequena_1793300858602.jpg',
   },
   {
     id: 'burg-2',
@@ -161,6 +169,6 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 25000,
     portion: 'Doble + Panceta',
     description: 'Doble carne jugosa, extra queso derretido, panceta crujiente y salsa especial.',
-    image: burgerImg || '/images/hamburguesa.jpg',
+    image: burgerGrandeImg || '/images/dish_burger_grande_1793300963811.jpg',
   },
 ];
